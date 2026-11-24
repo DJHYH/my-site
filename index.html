@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>段建海 | 个人网站</title>
+<style>
+  :root{
+    --blue-50:#f0f9ff;
+    --blue-100:#e0f2fe;
+    --blue-200:#bae6fd;
+    --blue-300:#7dd3fc;
+    --blue-400:#38bdf8;
+    --blue-500:#0ea5e9;
+    --blue-600:#0284c7;
+    --blue-700:#0369a1;
+    --blue-800:#075985;
+    --ink:#0f2537;
+    --ink-soft:#44607a;
+    --card:rgba(255,255,255,.72);
+    --card-border:rgba(255,255,255,.85);
+    --shadow:0 12px 32px rgba(14,116,233,.12);
+    --radius:20px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:"PingFang SC","Microsoft YaHei","Segoe UI",system-ui,sans-serif;
+    color:var(--ink);
+    background:linear-gradient(160deg,#f0f9ff 0%,#e0f2fe 28%,#dbeafe 55%,#bae6fd 82%,#e0f2fe 100%);
+    background-attachment:fixed;
+    min-height:100vh;
+    line-height:1.7;
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+    text-rendering:optimizeLegibility;
+  }
+  a{color:inherit;text-decoration:none}
+  img{max-width:100%}
+  ::selection{background:rgba(14,165,233,.18);color:var(--blue-800)}
+  a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
+    outline:2px solid var(--blue-400);outline-offset:2px;border-radius:10px;
+  }
+  /* ---------- 导航栏 ---------- */
+  header.nav{
+    position:sticky;top:0;z-index:100;
+    backdrop-filter:blur(14px);
+    background:rgba(224,242,254,.78);
+    border-bottom:1px solid rgba(186,230,253,.6);
+  }
+  .nav-inner{
+    max-width:1120px;margin:0 auto;padding:16px 24px;
+    display:flex;align-items:center;justify-content:space-between;
+  }
+  .logo{font-weight:700;font-size:1.2rem;color:var(--blue-700);letter-spacing:.5px}
+  .logo span{color:var(--blue-400)}
+  nav.menu{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+  nav.menu a{
+    font-size:.95rem;color:var(--ink-soft);position:relative;
+    padding:8px 14px;border-radius:10px;
+    transition:color .2s,background-color .2s;
+  }
+  nav.menu a::after{
+    content:"";position:absolute;left:14px;right:14px;bottom:2px;width:0;height:2px;
+    background:var(--blue-600);border-radius:2px;transition:width .25s;
+  }
+  nav.menu a:hover{color:var(--blue-600)}
+  nav.menu a:hover::after{width:calc(100% - 28px)}
+  /* 当前位置高亮：深色文字 + 加深底色 + 常驻下划线 */
+  nav.menu a.active{
+    color:var(--blue-800);font-weight:600;
+    background:rgba(14,165,233,.16);
+  }
+  nav.menu a.active::after{width:calc(100% - 28px);background:var(--blue-700)}
+  .nav-toggle{display:none;background:none;border:none;font-size:1.5rem;color:var(--blue-700);cursor:pointer}
+  /* ---------- 通用区块 ---------- */
+  section{max-width:1120px;margin:0 auto;padding:80px 24px;scroll-margin-top:72px}
+  .section-tag{
+    display:inline-block;font-size:.85rem;font-weight:600;color:var(--blue-600);
+    background:var(--blue-100);border:1px solid var(--blue-200);
+    padding:4px 14px;border-radius:999px;margin-bottom:16px;letter-spacing:1px;
+  }
+  h2.section-title{font-size:1.9rem;margin-bottom:12px;color:var(--ink);letter-spacing:.3px;font-weight:700}
+  .section-desc{color:var(--ink-soft);max-width:640px;margin-bottom:36px}
+  /* ---------- 首页 Hero ---------- */
+  .hero{
+    min-height:calc(100vh - 68px);
+    display:flex;align-items:center;
+    padding-top:40px;
+  }
+  .hero-grid{
+    display:grid;grid-template-columns:1.2fr .8fr;gap:48px;align-items:center;width:100%;
+  }
+  .hero .hi{font-size:1.05rem;color:var(--blue-600);font-weight:600;margin-bottom:10px}
+  .hero h1{font-size:3rem;line-height:1.25;margin-bottom:16px}
+  .hero h1 em{font-style:normal;color:var(--blue-500)}
+  .hero .role{
+    font-size:1.2rem;color:var(--ink-soft);margin-bottom:20px;
+  }
+  .hero .role b{color:var(--blue-700)}
+  .hero p.intro{color:var(--ink-soft);max-width:520px;margin-bottom:32px}
+  .btn-row{display:flex;gap:16px;flex-wrap:wrap}
+  .btn{
+    display:inline-flex;align-items:center;gap:8px;
+    padding:12px 26px;border-radius:999px;font-weight:600;font-size:.95rem;
+    transition:transform .2s,box-shadow .2s,background-color .2s,border-color .2s;
+  }
+  .btn-primary{background:linear-gradient(135deg,var(--blue-500),var(--blue-600));color:#fff;box-shadow:var(--shadow)}
+  .btn-ghost{background:rgba(255,255,255,.7);border:1px solid var(--blue-200);color:var(--blue-700)}
+  .btn-ghost:hover{background:var(--blue-100)}
+  .btn:hover{transform:translateY(-3px)}
+  .hero-card{
+    background:var(--card);border:1px solid var(--card-border);border-radius:28px;
+    box-shadow:var(--shadow);padding:36px;text-align:center;backdrop-filter:blur(10px);
+  }
+  .avatar{
+    width:150px;height:150px;border-radius:50%;margin:0 auto 20px;
+    background:linear-gradient(135deg,var(--blue-200),var(--blue-400));
+    display:flex;align-items:center;justify-content:center;font-size:3.2rem;color:#fff;
+    border:6px solid #fff;box-shadow:0 10px 24px rgba(14,165,233,.25);
+  }
+  .hero-card h3{font-size:1.25rem}
+  .hero-card p{color:var(--ink-soft);font-size:.9rem;margin-top:6px}
+  .hero-stats{display:flex;justify-content:center;gap:28px;margin-top:24px}
+  .stat b{display:block;font-size:1.4rem;color:var(--blue-600)}
+  .stat span{font-size:.82rem;color:var(--ink-soft)}
+  /* ---------- 卡片通用 ---------- */
+  .card{
+    background:var(--card);border:1px solid var(--card-border);border-radius:var(--radius);
+    box-shadow:var(--shadow);padding:28px;backdrop-filter:blur(10px);
+    transition:transform .25s,box-shadow .25s,border-color .25s;
+  }
+  .card:hover{box-shadow:0 16px 36px rgba(14,116,233,.16)}
+  /* ---------- 关于我 ---------- */
+  .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:28px}
+  .about-card ul{list-style:none;margin-top:14px}
+  .about-card li{padding:8px 0;color:var(--ink-soft);border-bottom:1px dashed var(--blue-200)}
+  .about-card li:last-child{border-bottom:none}
+  .about-card li b{color:var(--ink);display:inline-block;min-width:72px}
+  /* 优势列表：小标题固定宽度，内容换行后对齐内容起始位置（悬挂缩进） */
+  .advantage-list li{display:flex;gap:10px;align-items:flex-start}
+  .advantage-list li b{flex:0 0 72px;line-height:1.7}
+  .advantage-list li span{flex:1;min-width:0}
+  /* ---------- 简历（时间线） ---------- */
+  .resume-grid{display:grid;grid-template-columns:1fr 1fr;gap:28px}
+  .timeline{position:relative;padding-left:28px}
+  .timeline::before{
+    content:"";position:absolute;left:8px;top:6px;bottom:6px;width:2px;
+    background:linear-gradient(var(--blue-300),var(--blue-100));
+  }
+  .tl-item{position:relative;margin-bottom:28px}
+  .tl-item:last-child{margin-bottom:0}
+  .tl-item::before{
+    content:"";position:absolute;left:-26px;top:8px;width:14px;height:14px;border-radius:50%;
+    background:var(--blue-500);border:3px solid #fff;box-shadow:0 0 0 3px var(--blue-200);
+  }
+  .tl-item .period{font-size:.83rem;color:var(--blue-600);font-weight:600}
+  .tl-item h4{font-size:1.08rem;margin:4px 0}
+  .tl-item .org{color:var(--ink-soft);font-size:.9rem;margin-bottom:6px}
+  .tl-item p{color:var(--ink-soft);font-size:.92rem}
+  /* ---------- 技能 ---------- */
+  .skills-wrap{display:grid;grid-template-columns:repeat(2,1fr);gap:28px}
+  .skill{margin-bottom:20px}
+  .skill:last-child{margin-bottom:0}
+  .skill-head{display:flex;justify-content:space-between;margin-bottom:8px;font-size:.95rem}
+  .skill-head span:last-child{color:var(--blue-600);font-weight:600}
+  .bar{height:10px;background:var(--blue-100);border-radius:999px;overflow:hidden}
+  .bar i{
+    display:block;height:100%;border-radius:999px;
+    background:linear-gradient(90deg,var(--blue-400),var(--blue-600));
+    transition:width .9s ease;
+  }
+  .tag-cloud{display:flex;flex-wrap:wrap;gap:12px}
+  .tag{
+    padding:8px 18px;border-radius:999px;background:#fff;border:1px solid var(--blue-200);
+    color:var(--blue-700);font-size:.9rem;box-shadow:0 4px 12px rgba(14,116,233,.08);
+    transition:transform .2s,box-shadow .2s,border-color .2s,color .2s;
+  }
+  .tag:hover{transform:translateY(-2px);border-color:var(--blue-300);color:var(--blue-800);box-shadow:0 8px 18px rgba(14,116,233,.14)}
+  /* ---------- 项目 ---------- */
+  .project-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px}
+  .project-card{transition:transform .25s,box-shadow .25s;display:flex;flex-direction:column}
+  .project-card:hover{transform:translateY(-6px);box-shadow:0 18px 40px rgba(14,116,233,.18)}
+  .project-cover{
+    height:130px;border-radius:14px;margin-bottom:18px;
+    background:linear-gradient(135deg,var(--blue-200),var(--blue-400));
+    display:flex;align-items:center;justify-content:center;font-size:2.4rem;color:#fff;
+    transition:transform .25s,filter .25s;
+  }
+  .project-card:hover .project-cover{filter:brightness(1.05)}
+  .project-card h4{font-size:1.1rem;margin-bottom:8px}
+  .project-card p{color:var(--ink-soft);font-size:.92rem;flex:1}
+  .project-meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+  .project-meta span{font-size:.78rem;padding:4px 12px;border-radius:999px;background:var(--blue-100);color:var(--blue-700)}
+  /* ---------- 联系 ---------- */
+  .contact-grid{display:grid;grid-template-columns:1fr 1.2fr;gap:28px}
+  .contact-list{list-style:none;margin-top:18px}
+  .contact-list li{display:flex;gap:14px;align-items:center;padding:12px 0;color:var(--ink-soft)}
+  .contact-list .icon{
+    width:44px;height:44px;border-radius:14px;background:var(--blue-100);
+    display:flex;align-items:center;justify-content:center;font-size:1.2rem;
+    transition:transform .2s,background-color .2s;
+  }
+  .contact-list li:hover .icon{transform:scale(1.06);background:var(--blue-200)}
+  form .row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .form-group{margin-bottom:16px}
+  label{font-size:.88rem;color:var(--ink-soft);display:block;margin-bottom:6px}
+  input,textarea{
+    width:100%;padding:12px 14px;border-radius:12px;border:1px solid var(--blue-200);
+    background:rgba(255,255,255,.8);font-family:inherit;font-size:.95rem;color:var(--ink);
+    outline:none;transition:border-color .2s,box-shadow .2s;
+  }
+  input:focus,textarea:focus{border-color:var(--blue-400);box-shadow:0 0 0 3px rgba(56,189,248,.18)}
+  textarea{resize:vertical;min-height:120px}
+  form button{margin-top:6px;border:none;cursor:pointer}
+  /* ---------- 页脚 ---------- */
+  footer{
+    text-align:center;padding:32px 24px;color:var(--ink-soft);font-size:.88rem;
+    border-top:1px solid rgba(186,230,253,.6);
+  }
+  /* ---------- 响应式 ---------- */
+  @media (max-width:900px){
+    .hero-grid,.about-grid,.resume-grid,.skills-wrap,.contact-grid{grid-template-columns:1fr}
+    .project-grid{grid-template-columns:1fr 1fr}
+    .hero h1{font-size:2.3rem}
+  }
+  @media (max-width:640px){
+    nav.menu{
+      display:none;position:absolute;top:68px;left:0;right:0;
+      flex-direction:column;gap:0;align-items:stretch;background:rgba(224,242,254,.97);
+      padding:10px 24px;border-bottom:1px solid var(--blue-200);
+    }
+    nav.menu.open{display:flex}
+    nav.menu a{padding:12px 14px;border-bottom:1px solid var(--blue-100);border-radius:10px}
+    nav.menu a::after{display:none}
+    nav.menu a.active{background:rgba(14,165,233,.16)}
+    .nav-toggle{display:block}
+    .project-grid{grid-template-columns:1fr}
+    form .row{grid-template-columns:1fr}
+    section{padding:56px 20px}
+  }
+</style>
+</head>
+<body>
+<!-- 导航栏 -->
+<header class="nav">
+  <div class="nav-inner">
+    <a href="#home" class="logo">段建海<span>.dev</span></a>
+    <button class="nav-toggle" id="navToggle" aria-label="菜单">☰</button>
+    <nav class="menu" id="menu">
+      <a href="#home" class="active">首页</a>
+      <a href="#about">关于我</a>
+      <a href="#resume">简历</a>
+      <a href="#skills">技能</a>
+      <a href="#projects">项目经历</a>
+      <a href="#contact">联系方式</a>
+    </nav>
+  </div>
+</header>
+<!-- 首页 Hero -->
+<section id="home" class="hero">
+  <div class="hero-grid">
+    <div>
+      <p class="hi">你好，我是 👋</p>
+      <h1>小海，一名<br><em>网络技术爱好者</em></h1>
+      <p class="role">专注于 <b>网络规划 · 技术可行性 · 渗透测试</b></p>
+      <p class="intro">
+        作为计算机网络技术专业的学习者，专注网络规划与设计、系统集成与运维方向，注重技术的可行性与落地效果，乐于在实践场景中钻研并解决技术问题；同时持续学习网络安全与渗透测试相关知识。
+      </p>
+      <div class="btn-row">
+        <a href="#resume" class="btn btn-primary">查看简历 ↓</a>
+        <a href="#contact" class="btn btn-ghost">联系我</a>
+      </div>
+    </div>
+    <div class="hero-card">
+      <div class="avatar">👨‍💻</div>
+      <h3>段建海</h3>
+      <p>网络规划设计师 / 网络安全</p>
+      <div class="hero-stats">
+        <div class="stat"><b>4+</b><span>年学习实践</span></div>
+        <div class="stat"><b>30+</b><span>组网实验</span></div>
+        <div class="stat"><b>20+</b><span>练习场景</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- 关于我 -->
+<section id="about">
+  <span class="section-tag">ABOUT</span>
+  <h2 class="section-title">关于我</h2>
+  <p class="section-desc">一个热爱技术、注重实践、持续学习的工程实践者</p>
+  <div class="about-grid">
+    <div class="card about-card">
+      <h3>个人简介</h3>
+      <p style="color:var(--ink-soft);margin-top:12px">
+        计算机网络技术专业，深耕网络方向，对网络架构、局域网建设、数据通信有浓厚兴趣。熟练掌握路由交换基础配置，理解二层转发、三层路由、访问控制、链路聚合等核心技术；了解 SDN、RoCE、全光网络等前沿网络技术，能够绘制网络拓扑、撰写简易实施方案。目前暂无全职工作经验，自己通过模拟器完成多组组网实验，练习故障排查、网络调试，持续学习华为、华三相关网络知识。具备良好的问题分析能力、文档能力，对待技术踏实耐心，愿意从基础岗位做起，快速适应岗位要求，在网络实施、运维、技术支持方向长期成长。
+      </p>
+      <ul>
+        <li><b>城市</b>云南 · 临沧</li>
+        <li><b>学历</b>专科 · 计算机网络技术</li>
+        <li><b>状态</b>接受技术合作与交流</li>
+      </ul>
+    </div>
+    <div class="card about-card">
+      <h3>我的优势</h3>
+      <ul class="advantage-list">
+        <li><b>基础扎实</b><span>掌握路由交换、VLAN、链路聚合、访问控制等核心网络技术，熟悉故障排查与网络调试流程。</span></li>
+        <li><b>动手实践</b><span>熟悉主流网络设备配置与维护，可独立完成系统安装与调试。</span></li>
+        <li><b>文档能力</b><span>能够绘制网络拓扑、撰写简易实施方案与实验记录文档。</span></li>
+        <li><b>办公能力</b><span>熟练使用各类办公软件，高效完成日常文档处理与资料整理。</span></li>
+        <li><b>持续学习</b><span>关注 SDN、RoCE、全光网络与网络安全、渗透测试等方向。</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+<!-- 简历 -->
+<section id="resume">
+  <span class="section-tag">RESUME</span>
+  <h2 class="section-title">简历</h2>
+  <p class="section-desc">教育背景与实践经历时间线</p>
+  <div class="resume-grid">
+    <div class="card">
+      <h3 style="margin-bottom:22px">🎓 教育背景</h3>
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="period">2019 — 2022</div>
+          <h4>计算机网络技术 · 专科</h4>
+          <div class="org">云南科技信息职业学院 · 计算机系</div>
+          <p>主修计算机网络技术、计算机网络安全、路由交换、办公软件、网络管理等课程，在校期间通过模拟器完成多组组网实验与故障排查练习。</p>
+        </div>
+        <div class="tl-item">
+          <div class="period">持续进行中</div>
+          <h4>网络方向认证与技能提升</h4>
+          <div class="org">自学 / 在线课程 / 厂商文档（华为为主）</div>
+          <p>持续学习华为、华三网络设备相关知识，备考网络方向认证；同步学习 Linux 基础、网络安全与渗透测试基础内容，为后续学习打下基础。</p>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <h3 style="margin-bottom:22px">💼 实践经历</h3>
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="period">在校期间</div>
+          <h4>组网实验与网络调试练习</h4>
+          <div class="org">网络模拟器实验环境</div>
+          <p>完成多网段划分、VLAN 配置、链路聚合、OSPF 路由等实验，练习链路故障排查与配置核对，整理实验记录与拓扑文档。</p>
+        </div>
+        <div class="tl-item">
+          <div class="period">课外自学</div>
+          <h4>网络方案与安全基础练习</h4>
+          <div class="org">个人学习项目</div>
+          <p>根据中小型办公场景需求绘制网络拓扑、编写简易实施方案；逐步深入学习渗透测试基础，了解常见安全风险与防护思路。</p>
+        </div>
+        <div class="tl-item">
+          <div class="period">求职意向</div>
+          <h4>网络安全 / 运维 / 技术支持方向</h4>
+          <div class="org">期待从基础岗位做起</div>
+          <p>愿意从基础岗位做起，在实际项目中积累工程经验，快速适应岗位要求并长期成长。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- 技能 -->
+<section id="skills">
+  <span class="section-tag">SKILLS</span>
+  <h2 class="section-title">专业技能</h2>
+  <p class="section-desc">学习实践中积累的技术能力与工具栈</p>
+  <div class="skills-wrap">
+    <div class="card">
+      <div class="skill">
+        <div class="skill-head"><span>路由交换与局域网技术</span><span>78%</span></div>
+        <div class="bar"><i style="width:78%"></i></div>
+      </div>
+      <div class="skill">
+        <div class="skill-head"><span>网络拓扑与方案设计</span><span>70%</span></div>
+        <div class="bar"><i style="width:70%"></i></div>
+      </div>
+      <div class="skill">
+        <div class="skill-head"><span>故障排查与网络调试</span><span>68%</span></div>
+        <div class="bar"><i style="width:68%"></i></div>
+      </div>
+      <div class="skill">
+        <div class="skill-head"><span>网络安全 / 渗透测试基础</span><span>30%</span></div>
+        <div class="bar"><i style="width:30%"></i></div>
+      </div>
+    </div>
+    <div class="card">
+      <h3 style="margin-bottom:18px">工具与技术栈</h3>
+      <div class="tag-cloud">
+        <span class="tag">华为 / H3C 设备</span>
+        <span class="tag">VLAN / 子网划分</span>
+        <span class="tag">OSPF 基础路由</span>
+        <span class="tag">访问控制列表</span>
+        <span class="tag">网络拓扑绘制</span>
+        <span class="tag">模拟器实验环境</span>
+        <span class="tag">Linux 基础</span>
+        <span class="tag">方案文档撰写</span>
+        <span class="tag">网络安全基础</span>
+        <span class="tag">渗透测试入门</span>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- 项目经历 -->
+<section id="projects">
+  <span class="section-tag">PROJECTS</span>
+  <h2 class="section-title">项目经历</h2>
+  <p class="section-desc">部分代表性组网实验与练习项目</p>
+  <div class="project-grid">
+    <div class="card project-card">
+      <div class="project-cover">🏢</div>
+      <h4>中小型办公园区网组网实验</h4>
+      <p>在模拟器中完成多部门网段划分与 VLAN 规划，配置链路聚合与 OSPF 路由，验证跨网段互通与故障切换效果。</p>
+      <div class="project-meta"><span>VLAN 规划</span><span>链路聚合</span><span>OSPF 路由</span></div>
+    </div>
+    <div class="card project-card">
+      <div class="project-cover">🗺️</div>
+      <h4>企业网络拓扑与方案设计练习</h4>
+      <p>根据中小型办公场景需求梳理终端与业务分区，绘制网络拓扑图，编写简易实施方案，标注设备选型与网段规划思路。</p>
+      <div class="project-meta"><span>拓扑绘制</span><span>方案撰写</span><span>网段规划</span></div>
+    </div>
+    <div class="card project-card">
+      <div class="project-cover">🛡️</div>
+      <h4>网络安全基础与攻防入门练习</h4>
+      <p>学习访问控制策略配置与常见安全风险，在实验环境中练习基础漏洞探测与防护思路，整理安全测试记录与总结。</p>
+      <div class="project-meta"><span>网络安全</span><span>渗透测试入门</span><span>防护思路</span></div>
+    </div>
+  </div>
+</section>
+<!-- 联系方式 -->
+<section id="contact">
+  <span class="section-tag">CONTACT</span>
+  <h2 class="section-title">联系方式</h2>
+  <p class="section-desc">欢迎大家联系我，若有岗位机会或想闲聊都可以联系我</p>
+  <div class="contact-grid">
+    <div class="card">
+      <h3>保持联系</h3>
+      <ul class="contact-list">
+        <li><div class="icon">📧</div><div><b>邮箱</b><br>3302399443@qq.com</div></li>
+        <li><div class="icon">📱</div><div><b>电话</b><br>177-8743-1601</div></li>
+        <li><div class="icon">📍</div><div><b>所在城市</b><br>云南 · 临沧</div></li>
+        <li><div class="icon">💬</div><div><b>微信</b><br>177-8743-1601</div></li>
+      </ul>
+    </div>
+    <div class="card">
+      <form onsubmit="return handleSubmit(event)">
+        <div class="row">
+          <div class="form-group">
+            <label for="name">您的姓名</label>
+            <input id="name" type="text" placeholder="请输入姓名" required>
+          </div>
+          <div class="form-group">
+            <label for="email">邮箱</label>
+            <input id="email" type="email" placeholder="请输入邮箱" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="message">留言内容</label>
+          <textarea id="message" placeholder="请描述您想交流的事项…" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">发送消息 ✈️</button>
+      </form>
+    </div>
+  </div>
+</section>
+<footer>
+  © 2026 段建海 · 个人网站 | 持续更新优化中
+</footer>
+<script>
+  // 移动端菜单
+  const toggle = document.getElementById('navToggle');
+  const menu = document.getElementById('menu');
+  toggle.addEventListener('click', () => menu.classList.toggle('open'));
+  menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => menu.classList.remove('open')));
+  // 导航当前位置高亮
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('nav.menu a');
+  function setActive(id){
+    navLinks.forEach(a => {
+      a.classList.toggle('active', a.getAttribute('href') === '#' + id);
+    });
+  }
+  // 滚动时根据当前可见区块自动高亮对应导航项
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting) setActive(entry.target.id);
+    });
+  }, { rootMargin: '-40% 0px -55% 0px' });
+  sections.forEach(s => observer.observe(s));
+  // 点击导航时立即高亮目标项
+  navLinks.forEach(a => {
+    a.addEventListener('click', () => {
+      setActive(a.getAttribute('href').slice(1));
+    });
+  });
+  // 表单提交（示例：本地提示，未接入后端）
+  function handleSubmit(e){
+    e.preventDefault();
+    alert('感谢留言！这是演示站点，消息暂未接入后端，请通过页面中的邮箱或电话联系我！');
+    e.target.reset();
+    return false;
+  }
+</script>
+</body>
+</html>
